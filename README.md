@@ -1,47 +1,126 @@
-# Astro Starter Kit: Minimal
+# AstroChatApp
+<img alt="GitHub Workflow Status" src="https://img.shields.io/github/workflow/status/hamer1818/AstroChatApp/CI">
+<img alt="License" src="https://img.shields.io/github/license/hamer1818/AstroChatApp">
+<img alt="Stars" src="https://img.shields.io/github/stars/hamer1818/AstroChatApp?style=social">
 
-```sh
-npm create astro@latest -- --template minimal
-```
+AstroChatApp is a real-time, secure chat application built with Astro for the frontend and Python's Flask-SocketIO for the backend. It offers seamless communication with features like user avatars, online user tracking, emoji support, and more.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/minimal)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/minimal)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/minimal/devcontainer.json)
+## Table of Contents
+- Demo
+- Features
+- Technologies Used
+- Installation
+    - Prerequisites
+    - Backend Setup
+    - Frontend Setup
+- Usage
+- Contact
+- Acknowledgements
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Demo
 
-## 🚀 Project Structure
+![AstroChatApp Demo](/public/ss.jpeg)
 
-Inside of your Astro project, you'll see the following folders and files:
+## Features
+- **Real-Time Communication**: Instant messaging powered by Socket.IO.
+- **User Avatars**: Upload and display user avatars.
+- **Online Users List**: View currently online users.
+- **Emoji Support**: Integrate emojis into your conversations.
+- **End-to-End Encryption**: Secure your messages with AES encryption.
+- **Responsive Design**: Optimized for both desktop and mobile devices.
+- **User-Friendly Interface**: Clean and intuitive UI built with Tailwind CSS.
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+## Technologies Used
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+### Frontend
+- [Astro](https://astro.build/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Socket.IO](https://socket.io/)
+- [Emoji Picker Element](https://www.npmjs.com/package/emoji-picker-element)
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+### Backend
+- [Python](https://www.python.org/)
+- [Flask](https://flask.palletsprojects.com/)
+- [Flask-SocketIO](https://flask-socketio.readthedocs.io/)
+- [Flask-CORS](https://flask-cors.readthedocs.io/)
 
-Any static assets, like images, can be placed in the `public/` directory.
+## Installation
 
-## 🧞 Commands
+### Prerequisites
+- [Node.js](https://nodejs.org/) (v14.x or higher)
+- [npm](https://www.npmjs.com/) (v6.x or higher)
+- [Python](https://www.python.org/) (v3.6 or higher)
+- [pip](https://pypi.org/project/pip/) (v21.x or higher)
 
-All commands are run from the root of the project, from a terminal:
+### Backend Setup
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/hamer1818/AstroChatApp.git
+    cd AstroChatApp
+    ```
+2. Open the `server` directory:
+    ```bash
+    cd server
+    ```
+3. Create a virtual environment:
+    ```bash
+    python -m venv venv
+    ```
+4. Activate the virtual environment:
+    - Windows:
+        ```bash
+        venv\Scripts\activate
+        ```
+    - macOS/Linux:
+        ```bash
+        source venv/bin/activate
+        ```
+5. Install the required packages:
+    ```bash
+    pip install -r requirements.txt
+    ```
+6. Start the Flask server:
+    ```bash
+    python main.py
+    ```
+7. The server should now be running on `http://localhost:5000`.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+### Frontend Setup
+1. Open a new terminal and navigate to the `root` directory of the project.
+2. Install the required dependencies:
+    ```bash
+    npm install
+    ```
+3. Start the Astro development server:
+    ```bash
+    npm start
+    ```
+4. The frontend should now be running on `http://localhost:4321`.
 
-## 👀 Want to learn more?
+## Usage
+1. **Open the application in your browser**:
+    - Navigate to http://localhost:4321.
+2. Set Up Your Profile:
+    - Upload an avatar image
+    - Enter a unique username.
+    - Click **Join Chat** to enter the chat room.
+3. Start Chatting:
+    - Type your message in the input field at the bottom.
+    - Press **Enter** to send your message.
+    - Use the emoji picker to add emojis to your messages.
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## Contact
+- **Hamza ORTATEPE** - [https://hamzaortatepe.com.tr](https://hamzaortatepe.com.tr/)
+- **Email** - [hortatepe2002@gmail.com](mailto:hortatepe2002@gmail.com)
+- **Github** - [https://github.com/hamer1818/AstroChatApp](https://github.com/hamer1818/AstroChatApp)
+
+## Acknowledgements
+- [Astro](https://astro.build/)
+- [Flask-SocketIO](https://flask-socketio.readthedocs.io/)
+- [Socket.IO](https://socket.io/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Emoji Picker Element](https://www.npmjs.com/package/emoji-picker-element)
+
+---
+
+``Made with ❤️ by Hamza ORTATEPE``
