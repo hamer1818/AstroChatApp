@@ -1,16 +1,267 @@
----
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat App</title>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
+    <style>
+        emoji-picker {
+            width: 300px;
+            height: 400px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- Username Modal -->
+    <div id="usernameModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white p-8 rounded-xl shadow-2xl w-96">
+            <h2 class="text-2xl font-bold mb-6">Welcome to Chat</h2>
+            <div class="space-y-6">
+                <div>
+                    <label class="block text-sm font-medium mb-2">Choose Avatar</label>
+                    <div class="flex items-center space-x-4">
+                        <img id="avatarPreview" class="w-16 h-16 rounded-full border-2 border-blue-500">
+                        <input type="file" id="avatarInput" accept="image/*" class="hidden">
+                        <button onclick="document.getElementById('avatarInput').click()" 
+                                class="px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200">
+                            Upload Photo
+                        </button>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Username</label>
+                    <input type="text" 
+                           id="usernameInput"
+                           class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                           placeholder="Enter your username">
+                </div>
+                <button id="startChatButton"
+                        class="w-full py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 
+                               transition duration-200 font-medium">
+                    Join Chat
+                </button>
+            </div>
+        </div>
+    </div>
 
----
+    <!-- Main Chat Interface -->
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="w-80 bg-white border-r flex flex-col">
+            <!-- User Profile -->
+            <div class="p-4 border-b">
+                <div class="flex items-center space-x-3">
+                    <img id="userAvatar" class="w-10 h-10 rounded-full">
+                    <div>
+                        <h3 id="userName" class="font-medium"></h3>
+                        <span class="text-sm text-green-500">Online</span>
+                    </div>
+                </div>
+            </div>
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+            <!-- Online Users -->
+            <div class="p-4 border-b">
+                <h2 class="text-xs font-semibold text-gray-500 uppercase">Online Users</h2>
+                <div id="onlineUsers" class="mt-2 space-y-2"></div>
+            </div>
+
+            <!-- Chat List -->
+            <div class="flex-1 overflow-y-auto">
+                <div id="chatList" class="divide-y"></div>
+            </div>
+        </div>
+
+        <!-- Chat Area -->
+        <div class="flex-1 flex flex-col bg-gray-50">
+            <!-- Chat Header -->
+            <div class="p-4 bg-white border-b flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <img id="activeChatAvatar" class="w-10 h-10 rounded-full">
+                    <div>
+                        <h2 id="activeChatName" class="font-medium"></h2>
+                        <span id="activeChatStatus" class="text-sm text-gray-500"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Messages -->
+            <div id="messages" class="flex-1 p-4 overflow-y-auto space-y-4"></div>
+
+            <!-- Input Area -->
+            <div class="p-4 bg-white border-t">
+                <div class="flex items-center space-x-2">
+                    <button id="emojiButton" class="p-2 text-gray-500 hover:text-gray-700">
+                        😊
+                    </button>
+                    <input id="messageInput" 
+                           type="text" 
+                           class="flex-1 p-3 bg-gray-100 rounded-lg focus:outline-none"
+                           placeholder="Type a message..." autocomplete="off">
+                    <button id="sendButton" 
+                            class="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 
+                                   transition duration-200">
+                        Send
+                    </button>
+                </div>
+                <div id="emojiPicker" class="hidden absolute bottom-20 right-4">
+                    <emoji-picker></emoji-picker>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { io } from "https://cdn.socket.io/4.8.0/socket.io.esm.min.js";
+
+        const socket = io("http://127.0.0.1:5000");
+        let username = "";
+        let userAvatar = "";
+
+        // Avatar handling
+        document.getElementById('avatarInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    userAvatar = e.target.result;
+                    document.getElementById('avatarPreview').src = userAvatar;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Message timestamp formatting
+        function formatTime(date) {
+            return new Intl.DateTimeFormat('default', {
+                hour: 'numeric',
+                minute: 'numeric'
+            }).format(date);
+        }
+
+        // Message template
+        function createMessageElement(data, isOwn) {
+            const time = formatTime(new Date(data.timestamp));
+            return `
+                <div class="flex ${isOwn ? 'justify-end' : 'justify-start'} items-end space-x-2">
+                    ${!isOwn ? `<img src="${data.avatar || '/avatar.png'}" 
+                               class="w-6 h-6 rounded-full">` : ''}
+                    <div class="${isOwn ? 'bg-blue-500 text-white' : 'bg-white'} 
+                                rounded-lg p-3 max-w-xs shadow">
+                        ${!isOwn ? `<p class="text-xs text-gray-500 mb-1">${data.username}</p>` : ''}
+                        <p>${data.message}</p>
+                        <p class="text-xs ${isOwn ? 'text-blue-100' : 'text-gray-400'} text-right mt-1">
+                            ${time}
+                        </p>
+                    </div>
+                    ${isOwn ? `<span class="text-xs text-gray-400">✓✓</span>` : ''}
+                </div>
+            `;
+        }
+
+        // Emoji picker functionality
+        const emojiButton = document.getElementById('emojiButton');
+        const emojiPicker = document.getElementById('emojiPicker');
+        const messageInput = document.getElementById('messageInput');
+
+        emojiButton.addEventListener('click', () => {
+            emojiPicker.classList.toggle('hidden');
+        });
+
+        document.querySelector('emoji-picker')?.addEventListener('emoji-click', event => {
+            messageInput.value += event.detail.unicode;
+            emojiPicker.classList.add('hidden');
+            messageInput.focus();
+        });
+
+        // Close emoji picker when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!emojiPicker.contains(e.target) && !emojiButton.contains(e.target)) {
+                emojiPicker.classList.add('hidden');
+            }
+        });
+
+        // Add this to your script section
+        const modal = document.getElementById('usernameModal');
+        const startChatButton = document.getElementById('startChatButton');
+        const usernameInput = document.getElementById('usernameInput');
+        const userNameDisplay = document.getElementById('userName');
+
+        function startChat() {
+            const newUsername = usernameInput.value.trim();
+            if (newUsername) {
+                username = newUsername;
+                // Hide modal
+                modal.style.display = 'none';
+                // Update UI
+                userNameDisplay.textContent = username;
+                // Update avatar if selected
+                if (userAvatar) {
+                    document.getElementById('userAvatar').src = userAvatar;
+                }
+                // Join chat
+                socket.emit('join', { username, avatar: userAvatar });
+            } else {
+                alert('Please enter a username');
+            }
+        }
+
+        startChatButton.addEventListener('click', startChat);
+        usernameInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                startChat();
+            }
+        });
+
+        // Rest of your existing socket.io code with these improvements...
+// Socket event listeners
+socket.on('connect', () => {
+    console.log('Connected to server');
+});
+
+socket.on('message', (data) => {
+    const messagesDiv = document.getElementById('messages');
+    const isOwnMessage = data.username === username;
+    messagesDiv.innerHTML += createMessageElement(data, isOwnMessage);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+});
+
+socket.on('userList', (users) => {
+	console.log(users);
+    const onlineUsers = document.getElementById('onlineUsers');
+    onlineUsers.innerHTML = users
+        .filter(user => user.username !== username)
+        .map(user => `
+            <div class="flex items-center space-x-2">
+                <img src="${user.avatar || '/avatar.png'}" class="w-8 h-8 rounded-full">
+                <span class="text-sm">${user.username}</span>
+                <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+            </div>
+        `).join('');
+});
+
+// Message sending functionality
+function sendMessage() {
+    const messageInput = document.getElementById('messageInput');
+    const message = messageInput.value.trim();
+    
+    if (message && username) {
+        socket.emit('message', {
+            username: username,
+            message: message,
+            avatar: userAvatar || '/avatar.png'
+        });
+        messageInput.value = '';
+    }
+}
+
+// Add event listeners for sending messages
+document.getElementById('sendButton').addEventListener('click', sendMessage);
+document.getElementById('messageInput').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        sendMessage();
+    }
+});
+	</script>
+</body>
 </html>

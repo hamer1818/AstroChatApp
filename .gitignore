@@ -2,7 +2,8 @@
 dist/
 # generated types
 .astro/
-
+venv/
+__pycache__/
 # dependencies
 node_modules/
 
