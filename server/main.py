@@ -27,12 +27,13 @@ def on_join(data):
 
 @socketio.on('message')
 def handle_message(data):
-    print(f'Message from {request.sid}: {data}')
+    # print(f'Message from {request.sid}: {data}')
     socketio.emit('message', {
         'userId': request.sid,
         'username': data['username'],
         'message': data['message'],
-        'timestamp': datetime.now().isoformat()
+        'timestamp': datetime.now().isoformat(),
+        'avatar': data['avatar']
     })
 
 @socketio.on('disconnect')

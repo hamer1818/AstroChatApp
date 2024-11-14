@@ -6,16 +6,18 @@
 AstroChatApp is a real-time, secure chat application built with Astro for the frontend and Python's Flask-SocketIO for the backend. It offers seamless communication with features like user avatars, online user tracking, emoji support, and more.
 
 ## Table of Contents
-- Demo
-- Features
-- Technologies Used
-- Installation
+- [Demo](#demo)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+    - Frontend
+    - Backend
+- [Installation](#installation)
     - Prerequisites
     - Backend Setup
     - Frontend Setup
-- Usage
-- Contact
-- Acknowledgements
+- [Usage](#usage)
+- [Contact](#contact)
+- [Acknowledgements](#acknowledgements)
 
 ## Demo
 
@@ -26,7 +28,6 @@ AstroChatApp is a real-time, secure chat application built with Astro for the fr
 - **User Avatars**: Upload and display user avatars.
 - **Online Users List**: View currently online users.
 - **Emoji Support**: Integrate emojis into your conversations.
-- **End-to-End Encryption**: Secure your messages with AES encryption.
 - **Responsive Design**: Optimized for both desktop and mobile devices.
 - **User-Friendly Interface**: Clean and intuitive UI built with Tailwind CSS.
 
