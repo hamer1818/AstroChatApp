@@ -1,21 +1,33 @@
-# AstroChatApp
-<img alt="GitHub Workflow Status" src="https://img.shields.io/github/workflow/status/hamer1818/AstroChatApp/CI">
-<img alt="License" src="https://img.shields.io/github/license/hamer1818/AstroChatApp">
-<img alt="Stars" src="https://img.shields.io/github/stars/hamer1818/AstroChatApp?style=social">
+# AstroChatApp 🚀
 
-AstroChatApp is a real-time, secure chat application built with Astro for the frontend and Python's Flask-SocketIO for the backend. It offers seamless communication with features like user avatars, online user tracking, emoji support, and more.
+[English](README.md) | [Türkçe](README.tr.md)
+
+![License](https://img.shields.io/github/license/hamer1818/AstroChatApp)
+![Stars](https://img.shields.io/github/stars/hamer1818/AstroChatApp?style=social)
+![GitHub forks](https://img.shields.io/github/forks/hamer1818/AstroChatApp.svg?style=social&label=Fork)
+![GitHub watchers](https://img.shields.io/github/watchers/hamer1818/AstroChatApp.svg?style=social&label=Watch)
+![GitHub repo size](https://img.shields.io/github/repo-size/hamer1818/AstroChatApp.svg)
+![Languages](https://img.shields.io/github/languages/count/hamer1818/AstroChatApp.svg)
+![Top Language](https://img.shields.io/github/languages/top/hamer1818/AstroChatApp.svg)
+
+
+AstroChatApp is a real-time chat application built with Astro for the frontend and Python's Flask-SocketIO for the backend. It offers seamless communication with features like user avatars, online user tracking, emoji support.
+
 
 ## Table of Contents
+
 - [Demo](#demo)
 - [Features](#features)
 - [Technologies Used](#technologies-used)
-    - Frontend
-    - Backend
+  - [Frontend](#frontend)
+  - [Backend](#backend)
 - [Installation](#installation)
-    - Prerequisites
-    - Backend Setup
-    - Frontend Setup
+  - [Prerequisites](#prerequisites)
+  - [Backend Setup](#backend-setup)
+  - [Frontend Setup](#frontend-setup)
 - [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
 - [Contact](#contact)
 - [Acknowledgements](#acknowledgements)
 
@@ -31,13 +43,15 @@ AstroChatApp is a real-time, secure chat application built with Astro for the fr
 - **Responsive Design**: Optimized for both desktop and mobile devices.
 - **User-Friendly Interface**: Clean and intuitive UI built with Tailwind CSS.
 
+
 ## Technologies Used
 
 ### Frontend
 - [Astro](https://astro.build/)
 - [Tailwind CSS](https://tailwindcss.com/)
-- [Socket.IO](https://socket.io/)
+- [Socket.IO Client](https://socket.io/)
 - [Emoji Picker Element](https://www.npmjs.com/package/emoji-picker-element)
+
 
 ### Backend
 - [Python](https://www.python.org/)
@@ -45,13 +59,14 @@ AstroChatApp is a real-time, secure chat application built with Astro for the fr
 - [Flask-SocketIO](https://flask-socketio.readthedocs.io/)
 - [Flask-CORS](https://flask-cors.readthedocs.io/)
 
+
 ## Installation
 
 ### Prerequisites
-- [Node.js](https://nodejs.org/) (v14.x or higher)
-- [npm](https://www.npmjs.com/) (v6.x or higher)
-- [Python](https://www.python.org/) (v3.6 or higher)
-- [pip](https://pypi.org/project/pip/) (v21.x or higher)
+- **Node.js** (v14 or later)
+- **npm** (v6 or later)
+- **Python** (v3.7 or later)
+- **pip** (Python package installer)
 
 ### Backend Setup
 1. Clone the repository:
