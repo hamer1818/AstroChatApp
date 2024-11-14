@@ -2,7 +2,7 @@
 
 [English](README.md) | [Türkçe](README.tr.md)
 
-![License](https://img.shields.io/github/license/hamer1818/AstroChatApp)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![Stars](https://img.shields.io/github/stars/hamer1818/AstroChatApp?style=social)
 ![GitHub forks](https://img.shields.io/github/forks/hamer1818/AstroChatApp.svg?style=social&label=Fork)
 ![GitHub watchers](https://img.shields.io/github/watchers/hamer1818/AstroChatApp.svg?style=social&label=Watch)
